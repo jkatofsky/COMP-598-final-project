@@ -11,6 +11,7 @@ lemmatizer = WordNetLemmatizer()
 
 parser = argparse.ArgumentParser()
 parser.add_argument('data', type=argparse.FileType('r'), help="json file with reddit posts")
+parser.add_argument('-o', '--output', help="output json file")
 args = parser.parse_args()
 
 stop_words = stopwords.words('english')
@@ -40,3 +41,8 @@ for title in filtered_titles:
 
 sorted_dict = dict(sorted(top_freq.items(), key=lambda item: item[1], reverse=True))
 print(sorted_dict)
+
+with open(args.output, "w+") as output_file:
+	for x in title_list:
+		json.dump(x, output_file)
+		output_file.write('\n')
