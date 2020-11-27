@@ -20,27 +20,34 @@ punctuation = string.punctuation + "’" + "‘" + "“" + "”"
 json_data = args.data.read()
 title_list = []
 
+# print(type(json.loads(json_data)))
+
 for x in json_data.splitlines():
-	title_list.append(json.loads(x)['data']['title'])
+	# title_list.append(json.loads(x)['data']['title'])
+	try:
+		title_list.append(json.loads(x)['data']['title'])
+	except: 
+		continue
 
-filtered_titles = []
+# filtered_titles = []
 
-for x in title_list:
-	word_tokens = word_tokenize(x)
-	title_filter = [lemmatizer.lemmatize(w).lower() for w in word_tokens if not w in stop_words and not w in punctuation]
-	filtered_titles.append(title_filter)
+# for x in title_list:
+# 	word_tokens = word_tokenize(x)
+# 	title_filter = [lemmatizer.lemmatize(w).lower() for w in word_tokens if not w in stop_words and not w in punctuation]
+# 	filtered_titles.append(title_filter)
 
-top_freq = {}
+# top_freq = {}
 
-for title in filtered_titles:
-	for word in title:
-		if word not in top_freq:
-			top_freq[word] = 1
-		else:
-			top_freq[word] += 1
+# for title in filtered_titles:
+# 	for word in title:
+# 		if word not in top_freq:
+# 			top_freq[word] = 1
+# 		else:
+# 			top_freq[word] += 1
 
-sorted_dict = dict(sorted(top_freq.items(), key=lambda item: item[1], reverse=True))
-print(sorted_dict)
+# sorted_dict = dict(sorted(top_freq.items(), key=lambda item: item[1], reverse=True))
+# print(sorted_dict)
+
 
 with open(args.output, "w+") as output_file:
 	for x in title_list:
