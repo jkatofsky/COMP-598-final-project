@@ -2,6 +2,10 @@ import argparse
 import pandas as pd
 import numpy as np 
 import math
+import operator
+from itertools import islice
+
+
 
 #Characterize your topics by computing the 10 words in each category with the highest tf-idf scores
 #(to compute the inverse document frequency, use all 2,000 posts that you originally collected)
@@ -114,25 +118,34 @@ for topic in topic_list:
 		num_topics_term = num_topics_term_dict[word]
 		tfidf_dict[topic][word] = calc_tfidf(num_topic_appearance, num_topics, num_topics_term)
 
+
+def take(n, iterable):
+    #"Return first n items of the iterable as a list"
+    return list(islice(iterable, n))
+
 for x in tfidf_dict:
 	tfidf_dict[x] = dict(sorted(tfidf_dict[x].items(), key=lambda item: item[1], reverse=True))
-	print(list(tfidf_dict[x])[:10])
+	# print(list(tfidf_dict[x])[:10])
 
-# for x in tfidf_dict:
-# 	tfidf_items = tfidf_dict[x].items()
-# 	tfidf_list = list(tfidf_items[x])[:10]
+print()
+print("TF-IDF RESULTS")
+for x in tfidf_dict:
+	print(take(10, tfidf_dict[x].items()))
 
+print()
 
-# for x in bonus_data:
-# 	dict_items = bonus_data[x].items()
-# 	tfidf_list = list(bonus_data[x])[:num_words]
-# 	bonus_tfidf_dict[x].extend(tfidf_list)
+def topic_count(dataframe):
+	results = {"election challenge": 0, "election general": 0, "pandemic": 0 , "domestic policy/politics": 0, "foreign relations": 0}
+	for index, row in dataframe.iterrows():
+		results[row['topic']] += 1
+	return results
 
-
-
-
-
-		
+print("POLITICS TOPIC COUNT")
+print(topic_count(politics_df))
+print()
+print("CONSERVATIVE TOPIC COUNT")
+print(topic_count(conservative_df))
+print()
 		
 
 
