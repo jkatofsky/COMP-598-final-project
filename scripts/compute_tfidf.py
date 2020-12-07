@@ -118,6 +118,15 @@ for x in tfidf_dict:
 	tfidf_dict[x] = dict(sorted(tfidf_dict[x].items(), key=lambda item: item[1], reverse=True))
 	print(list(tfidf_dict[x])[:10])
 
+# for x in tfidf_dict:
+# 	tfidf_items = tfidf_dict[x].items()
+# 	tfidf_list = list(tfidf_items[x])[:10]
+
+
+# for x in bonus_data:
+# 	dict_items = bonus_data[x].items()
+# 	tfidf_list = list(bonus_data[x])[:num_words]
+# 	bonus_tfidf_dict[x].extend(tfidf_list)
 
 
 
